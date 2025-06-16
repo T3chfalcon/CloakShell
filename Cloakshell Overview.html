@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloakShell: Complete Overview and Development Blueprint</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Midnight Cyber -->
+    <!-- Application Structure Plan: This HTML document serves as a static blueprint, providing a linear, scrollable overview of the CloakShell project. The structure is designed for clear presentation and easy readability of the project's summary, features, architecture, roadmap, and operational details. It uses distinct sections for each major topic, utilizing headings and lists for hierarchical organization of information. This static structure was chosen for documentation clarity, rather than interactivity. -->
+    <!-- Visualization & Content Choices: This document is a textual blueprint. All content is presented as plain text, organized into headings and lists, with code examples formatted as text blocks. No dynamic visualizations or interactive elements are used, as the primary goal is to provide a comprehensive, static overview of the project plan. CONFIRMING NO SVG/Mermaid or Canvas graphics are used, as this is a documentation blueprint. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0D1117; color: #C9D1D9; }
+        .font-mono { font-family: 'Roboto Mono', monospace; }
+        .container { max-width: 960px; }
+        .section-separator { border-top: 1px solid #30363D; margin-top: 2.5rem; margin-bottom: 2.5rem; }
+        .code-block { background-color: #010409; border-radius: 0.5rem; padding: 1.5rem; overflow-x: auto; font-size: 0.9rem; line-height: 1.5; }
+        .list-item-spacing > li { margin-bottom: 0.5rem; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #161B22; }
+        ::-webkit-scrollbar-thumb { background: #30363D; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #58A6FF; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">CloakShell: Complete Overview and Development Blueprint</h1>
+        </header>
+
+        <main class="space-y-12">
+            <section>
+                <p class="text-lg text-gray-300 text-center">This document provides a comprehensive overview and detailed development blueprint for CloakShell, an advanced, modular PowerShell obfuscator and evasive payload generator.</p>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">📄 Project Summary</h2>
+                <p class="text-gray-400 leading-relaxed">
+                    CloakShell is an advanced, modular PowerShell obfuscator and evasive payload generator designed for red teamers and offensive operators. It transforms readable PowerShell scripts into heavily obfuscated payloads capable of bypassing modern EDR solutions like Defender for Endpoint, CrowdStrike, SentinelOne, and Carbon Black. It supports multi-layered encoding, polymorphism, and optional C# loaders to perform AMSI/ETW bypass and in-memory execution.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">⚖️ Primary Use Case</h2>
+                <p class="text-gray-400 leading-relaxed">
+                    In stealth-focused red team engagements, you need to execute PowerShell payloads (recon, C2 stagers, credential dumpers, etc.) without getting flagged. CloakShell is the pre-execution transformation engine that turns noisy scripts into evasive, in-memory code that disappears from disk and bypasses behavioral detection.
+                </p>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">⚡️ Core Features</h2>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 list-item-spacing">
+                    <li><strong class="text-blue-400">Python-based CLI tool</strong> with flexible options for input/output, obfuscation level, output format.</li>
+                    <li><strong class="text-blue-400">Modular Obfuscation Engine:</strong>
+                        <ul class="list-circle list-inside ml-6 text-sm space-y-1">
+                            <li>Variable/function renaming</li>
+                            <li>String breaking (<code class="font-mono text-green-400">"l" + "sa" + "ss"</code>)</li>
+                            <li>Encoding: XOR, Base64, Gzip, Hex, AES (optional)</li>
+                            <li>Control flow flattening</li>
+                            <li>Junk code injection (NOPs, fake logic, sleeps)</li>
+                            <li>Dead code insertion</li>
+                        </ul>
+                    </li>
+                    <li><strong class="text-blue-400">Deobfuscation Stubs:</strong>
+                        <ul class="list-circle list-inside ml-6 text-sm space-y-1">
+                            <li>Lightweight PowerShell stub for decoding on runtime</li>
+                            <li>Optional C# stub with:
+                                <ul class="list-square list-inside ml-6 text-xs space-y-0.5">
+                                    <li>AMSI bypass</li>
+                                    <li>ETW patching</li>
+                                    <li>Reflective PS execution</li>
+                                    <li>Anti-sandbox/debugger checks</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong class="text-blue-400">Output Options:</strong>
+                        <ul class="list-circle list-inside ml-6 text-sm space-y-1">
+                            <li><code class="font-mono text-green-400">.ps1</code> payload</li>
+                            <li>Single-line PowerShell (one-liner)</li>
+                            <li>Compiled <code class="font-mono text-green-400">.exe</code> or <code class="font-mono text-green-400">.dll</code> C# stagers</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">🌐 Architecture Overview</h2>
+                <div class="code-block text-white">
+<pre class="font-mono">[input.ps1] ---&gt; [Obfuscator Engine] ---&gt; [Encoded Payload + Deob Stub] ---&gt; [payload.ps1 | ps1-oneliner | C# EXE]</pre>
+                </div>
+                <h3 class="text-2xl font-semibold text-white mb-2 mt-6">Languages Used:</h3>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 list-item-spacing">
+                    <li><strong class="text-blue-400">Python</strong> (CLI + Obfuscation engine)</li>
+                    <li><strong class="text-blue-400">PowerShell</strong> (runtime deobfuscation logic)</li>
+                    <li><strong class="text-blue-400">C#</strong> (.NET loader w/ AMSI/ETW bypass)</li>
+                </ul>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">⚛️ Development Roadmap</h2>
+                <h3 class="text-2xl font-semibold text-white mb-2">Phase 1: MVP - Basic Obfuscator (<span class="text-green-400">2-4 weeks</span>)</h3>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 list-item-spacing">
+                    <li>[ ] CLI (<code class="font-mono text-green-400">argparse</code>) for <code class="font-mono text-green-400">--input</code>, <code class="font-mono text-green-400">--output</code>, <code class="font-mono text-green-400">--level</code>, <code class="font-mono text-green-400">--format</code></li>
+                    <li>[ ] Read PS script, parse via regex/AST</li>
+                    <li>[ ] Implement:
+                        <ul class="list-circle list-inside ml-6 text-sm space-y-1">
+                            <li>Variable renaming</li>
+                            <li>Function renaming</li>
+                            <li>String splitting/concatenation</li>
+                            <li>Single layer Base64</li>
+                            <li>PowerShell stub template</li>
+                        </ul>
+                    </li>
+                    <li>[ ] Output new <code class="font-mono text-green-400">.ps1</code> w/ inline deobfuscation stub</li>
+                </ul>
+
+                <h3 class="text-2xl font-semibold text-white mb-2 mt-6">Phase 2: Advanced Obfuscation & Anti-Analysis (<span class="text-green-400">4-8 weeks</span>)</h3>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 list-item-spacing">
+                    <li>[ ] Multi-layer encoding: XOR + Base64, Gzip, Hex</li>
+                    <li>[ ] Junk code, NOP insertion</li>
+                    <li>[ ] Basic CFG flattening: reorder, switch statements</li>
+                    <li>[ ] Anti-analysis: detect debuggers, sandboxes</li>
+                    <li>[ ] Improved PowerShell stub: AES decryption + in-mem <code class="font-mono text-green-400">Invoke-Expression</code></li>
+                </ul>
+
+                <h3 class="text-2xl font-semibold text-white mb-2 mt-6">Phase 3: C# Loader Integration (<span class="text-green-400">6-12 weeks</span>)</h3>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 list-item-spacing">
+                    <li>[ ] Build minimal C# EXE with embedded PS script (Base64/XOR encoded)</li>
+                    <li>[ ] AMSI/ETW bypass via direct memory patching</li>
+                    <li>[ ] Add CLI arg for <code class="font-mono text-green-400">--format csharp-exe</code></li>
+                    <li>[ ] Optional reflective loading</li>
+                    <li>[ ] Integration with Python CLI using subprocess + <code class="font-mono text-green-400">msbuild</code> or <code class="font-mono text-green-400">csc</code></li>
+                </ul>
+
+                <h3 class="text-2xl font-semibold text-white mb-2 mt-6">Phase 4: UX, Testing, Docs (<span class="text-green-400">4-8 weeks</span>)</h3>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 list-item-spacing">
+                    <li>[ ] Lab testing on Defender, CrowdStrike, SentinelOne</li>
+                    <li>[ ] CLI flags: verbosity, stealth mode, output format</li>
+                    <li>[ ] Write clean <code class="font-mono text-green-400">README</code> + usage examples</li>
+                    <li>[ ] Add reusable obfuscation modules (plugins)</li>
+                </ul>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">🔍 Obfuscation Techniques (Plugin Engine Design)</h2>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 list-item-spacing">
+                    <li><code class="font-mono text-green-400">VariableRenamer</code></li>
+                    <li><code class="font-mono text-green-400">FunctionRenamer</code></li>
+                    <li><code class="font-mono text-green-400">StringObfuscator</code></li>
+                    <li><code class="font-mono text-green-400">JunkCodeInjector</code></li>
+                    <li><code class="font-mono text-green-400">EncodingLayer(Base64|XOR|AES)</code></li>
+                    <li><code class="font-mono text-green-400">FlowObfuscator</code></li>
+                    <li><code class="font-mono text-green-400">DeadCodeGenerator</code></li>
+                    <li><code class="font-mono text-green-400">StubInjector</code></li>
+                    <li><code class="font-mono text-green-400">CSharpLoaderBuilder</code></li>
+                </ul>
+                <p class="text-gray-400 mt-4">All plugins implement:</p>
+                <div class="code-block text-white mt-2">
+<pre class="font-mono">class Plugin:
+    def apply(self, script_text: str) -> str:
+        pass</pre>
+                </div>
+                <p class="text-gray-400 mt-4">And are called sequentially via config pipeline:</p>
+                <div class="code-block text-white mt-2">
+<pre class="font-mono">for plugin in selected_plugins:
+    script = plugin.apply(script)</pre>
+                </div>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">🔠 CLI Usage (Future)</h2>
+                <div class="code-block text-white">
+<pre class="font-mono">python cloakshield.py \
+    --input myscript.ps1 \
+    --output cloak.ps1 \
+    --obfuscation-level high \
+    --format ps1-oneliner \
+    --encoding XOR,Base64 \
+    --junk-code true \
+    --anti-analysis true</pre>
+                </div>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">🎓 Learning Goals Covered</h2>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 list-item-spacing">
+                    <li>AST parsing and code transformation (Python)</li>
+                    <li>Encoding + encryption schemes</li>
+                    <li>PowerShell runtime behavior and in-memory execution</li>
+                    <li>AMSI/ETW bypass methods (manual patching, syscall patching)</li>
+                    <li>Compiler invocation from Python (<code class="font-mono text-green-400">csc</code>, <code class="font-mono text-green-400">msbuild</code>, <code class="font-mono text-green-400">ilasm</code>)</li>
+                    <li>Sandbox detection tricks</li>
+                    <li>Red team stealth tactics (LOLbins, IEX, etc)</li>
+                </ul>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">⚡ Operational Use Flow</h2>
+                <ol class="list-decimal list-inside text-gray-400 space-y-2 list-item-spacing">
+                    <li>Write clean PS script: <code class="font-mono text-green-400">Invoke-StealthRecon.ps1</code></li>
+                    <li>Run CloakShell:
+                        <div class="code-block text-white mt-2 mb-2">
+<pre class="font-mono">python cloakshield.py --input Invoke-StealthRecon.ps1 --output final.ps1 --format ps1-oneliner --obfuscation-level high</pre>
+                        </div>
+                    </li>
+                    <li>Deliver via phishing doc, LOLBin (<code class="font-mono text-green-400">certutil</code>, <code class="font-mono text-green-400">mshta</code>, etc), or encoded in macro</li>
+                    <li>Target executes, stub runs:
+                        <ul class="list-disc list-inside ml-6 text-sm space-y-1">
+                            <li>Sandbox checks</li>
+                            <li>AMSI disabled</li>
+                            <li>Decrypt/decode payload in memory</li>
+                            <li>Executes via <code class="font-mono text-green-400">Invoke-Expression</code></li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">🚧 Cautions</h2>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 list-item-spacing">
+                    <li>Offensive use only in authorized engagements</li>
+                    <li>AMSI bypass and ETW patching will break in future Defender updates</li>
+                    <li>Some encoders may trigger AVs if overused (e.g., layered Base64)</li>
+                    <li>Tool may need frequent updates as EDRs adapt</li>
+                </ul>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">🔄 Long-Term Potential</h2>
+                <ul class="list-disc list-inside text-gray-400 space-y-2 list-item-spacing">
+                    <li>Convert to GUI wrapper for script kiddies (keep CLI for operators)</li>
+                    <li>Add encrypted C2 beacon support</li>
+                    <li>API version for automation frameworks</li>
+                    <li>Plugin marketplace for shared obfuscation modules</li>
+                    <li>Port to Golang for cross-compile portability</li>
+                </ul>
+            </section>
+
+            <div class="section-separator"></div>
+
+            <section>
+                <h2 class="text-3xl font-bold text-white mb-4">📈 Project Structure</h2>
+                <div class="code-block text-white">
+<pre class="font-mono">CloakShell/
+├── cloakshield.py           # CLI entry point
+├── obfuscators/
+│   ├── variable_renamer.py
+│   ├── string_obfuscator.py
+│   └── flow_obfuscator.py
+├── stubs/
+│   ├── ps_stub.ps1
+│   └── csharp_stub.cs
+├── encoders/
+│   ├── base64_encoder.py
+│   └── xor_encoder.py
+├── utils/
+│   └── file_utils.py
+└── README.md</pre>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>
